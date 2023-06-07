@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import {TemplateService} from 'src/app/services/template.service';
+import {MatStepperModule} from '@angular/material/stepper';
 
 @Component({
   selector: 'app-new-template',

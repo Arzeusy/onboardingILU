@@ -1,5 +1,32 @@
 <div class="container-fluid">
-    <div class="row Justify-content-center">
-
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <mat-vertical-stepper [linear]="false" #stepper animationDuration="200">
+                <mat-step >
+                    <ng-template matStepLabel>
+                        <mat-icon>settings</mat-icon>
+                    </ng-template>
+                  
+                </mat-step>
+                <mat-step >
+                    <ng-template matStepLabel>
+                        <mat-icon>construction</mat-icon>
+                    </ng-template>
+                  
+                </mat-step>
+                <mat-step>
+                  <ng-template matStepLabel>
+                    <mat-icon>
+                        calendar_month
+                    </mat-icon>
+                  </ng-template>
+                  You are now done.
+                  <div>
+                    <button mat-button matStepperPrevious>Back</button>
+                    <button mat-button (click)="stepper.reset()">Reset</button>
+                  </div>
+                </mat-step>
+              </mat-vertical-stepper>
+        </div>
     </div>
 </div>

@@ -10,16 +10,11 @@ export class NavbarComponent {
   
   constructor(
     private route: Router,
-    // private _snackBar: MatSnackBar
   ) {
-    // this.formReg = new FormGroup({
-    //   email: new FormControl(),
-    //   password: new FormControl()
-    // });
  }
 
   gohome() {
-    this.route.navigate(['/']);
+    this.route.navigate(['/home']);
   }
   
 }

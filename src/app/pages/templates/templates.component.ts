@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import TemplateInterface from 'src/app/interfaces/template.interface';
 import {TemplateService} from 'src/app/services/template.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-templates',
@@ -13,10 +14,9 @@ export class TemplatesComponent implements OnInit {
   templates: TemplateInterface[] | undefined;
   
   constructor(
-    private templateService:TemplateService
-  ){
-  //  this.templates = 
-    
+    private templateService:TemplateService,
+    private route: Router,
+  ){    
   }
 
   ngOnInit(): void {
@@ -26,6 +26,9 @@ export class TemplatesComponent implements OnInit {
     )
   }
 
+  goNewTemplates(id:string){
+    this.route.navigate(['template/', id ]);
+  }
  
 
 }

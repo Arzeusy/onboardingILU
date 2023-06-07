@@ -2,7 +2,7 @@
 
 // $principal-dark: #03091e;
 $principal-dark: #202e3c;
-$principal-white: #f5f0f0;
+$principal-white: #e8e8e8;
 // $principal-white: #69BD4B;
 
 
@@ -235,5 +235,9 @@ body {
 }
 
 .mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-raised-button {
   width: 100%;
 }

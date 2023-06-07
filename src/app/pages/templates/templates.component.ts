@@ -21,7 +21,7 @@ export class TemplatesComponent implements OnInit {
 
   ngOnInit(): void {
     this.templateService.getTemplates().subscribe(
-      res =>{ this.templates = res;},
+      res =>{ this.templates = res; console.log(res)},
       err =>{ console.error(err);},
     )
   }

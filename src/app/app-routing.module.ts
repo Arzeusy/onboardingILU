@@ -7,6 +7,7 @@ import { TemplatesComponent } from './pages/templates/templates.component';
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: "home", component: HomeComponent },
+  { path: "template", component: NewTemplateComponent },
   { path: "template/:id", component: NewTemplateComponent },
 ];
 

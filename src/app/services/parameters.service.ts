@@ -30,11 +30,9 @@ export class ParametersService {
     let res: IParameter[] =[];
     const templateRef = collection(this.firestore, 'parameter');
     const q = query(templateRef, where("templateId", "==", idTemplate));
-    // return collectionData(templateRef, {idField: 'id'}) as Observable<IParameter[]>
     const querySnapshot =  await getDocs(q) ;
-    // return querySnapshot.docs 
     await querySnapshot.forEach((doc) => {
-      res.push(doc.data() as IParameter);
+      res.push({...doc.data(), id:doc.id} as IParameter);
     })
     return  res ;
    }

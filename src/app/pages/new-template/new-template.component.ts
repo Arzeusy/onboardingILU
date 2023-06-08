@@ -145,9 +145,12 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
   }
 
   async listParameter(){
+    this.spinner.show();
     let params: IParameter[] = await this.parameterService.get(this.id);
+    console.log(params)
     params = params.filter( a=> a.group == this.actualGroup); 
     this.dataSource = new MatTableDataSource(params);
+    this.spinner.hide();
   }
 
   getLabelParameter(id:string){
@@ -162,6 +165,16 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
         return "Objetivos de desempeño";
     }
   }
+
+
+  async deleteParameter(data:IParameter){
+    this.spinner.show();
+    console.log(data, "delete")
+     await this.parameterService.delete(data);
+    this.spinner.hide();
+    this.listParameter()
+  }
+
 
 
 }

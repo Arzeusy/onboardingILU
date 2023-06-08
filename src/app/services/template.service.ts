@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, collectionData, getDoc, doc, where, deleteDoc, fromRef } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, collectionData, getDoc, doc, where, deleteDoc, fromRef, updateDoc } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
 import TemplateInterface from '../interfaces/template.interface';
 
@@ -59,5 +59,15 @@ export class TemplateService {
     return deleteDoc(templateRef);
 
    }
+
+     /**
+    * 
+    * @param tlp 
+    * @returns delete the document related to id 
+    */
+     updateTemplate(tlp: TemplateInterface){
+      const templateRef = doc(this.firestore, `template/${tlp.id}`);
+      return updateDoc(templateRef, {...tlp});
+     }
 
 }

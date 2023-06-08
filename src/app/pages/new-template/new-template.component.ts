@@ -8,6 +8,10 @@ import TemplateInterface from 'src/app/interfaces/template.interface';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { NgxSpinnerService } from 'ngx-spinner';
+import parameterTypeEnum from '../../enums/parameter-type.enum';
+import parameterGroupEnum from '../../enums/parameter-group.enum';
+import { ParametersService } from 'src/app/services/parameters.service';
+import IParameter from 'src/app/interfaces/parameter.interface';
 
 @Component({
   selector: 'app-new-template',
@@ -18,14 +22,18 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
 
   step = 0;
   form!: FormGroup;
+  formParams: FormGroup= new FormGroup({});
   id:string ="";
-  displayedColumns: string[] = ['id', 'name', 'progress', 'fruit'];
-  dataSource: MatTableDataSource<TemplateInterface> = new MatTableDataSource();
+  displayedColumns: string[] = ['no', 'name', 'group', 'options'];
+  actualGroup:number = parameterGroupEnum.objetivosDesempeño;
+  dataSource: MatTableDataSource<IParameter> = new MatTableDataSource();
+  
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   
   constructor(
     private templateService:TemplateService,
+    private parameterService:ParametersService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
   ){
@@ -38,9 +46,23 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
       description: new FormControl("", [Validators.maxLength(300)]),
       position: new FormControl(null, [Validators.required]),
     });
-
+    
+    this.newformParam();
     
   }
+
+  newformParam(){
+
+    this.formParams = new FormGroup({
+      // id: new FormControl(""),
+      name: new FormControl("", [Validators.minLength(10), Validators.maxLength(50), Validators.required]),
+      group: new FormControl(this.actualGroup.toString(), [Validators.required]),
+      type: new FormControl(parameterTypeEnum.skill, [Validators.required]),
+      templateId: new FormControl(this.id, [Validators.required]),
+    });
+  }
+
+
 
    ngOnInit(): void {
     if(this.id != null || this.id != ""){
@@ -52,7 +74,9 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
         }
       ).catch( err =>{
         this.spinner.hide();
-      })
+      });
+
+      this.listParameter();
     }
   }
 
@@ -63,10 +87,19 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
 
   async onSubmit(){
     if (!this.form.invalid){
-      const response = await this.templateService.addTemplate(
-        this.form.value
-      );
-      console.log(response);
+      this.spinner.show();
+      if (this.id == ""){
+        const response = await this.templateService.addTemplate(
+          this.form.value
+        );
+        console.log(response);
+        // this.listParameter();
+      } else {
+        const response = await this.templateService.updateTemplate(
+          {...this.form.value, id: this.id}
+        );
+      }
+      this.spinner.hide();
 
     }
   }
@@ -91,5 +124,44 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
   prevStep() {
     this.step--;
   }
+
+  async onSubmitParameter(){
+    console.log(this.formParams);
+    if (!this.formParams.invalid && !!this.id){
+      this.spinner.show();
+        await this.parameterService.addNew(
+          this.formParams.value
+        );
+        this.listParameter();
+        this.newformParam();
+      this.spinner.hide();
+
+    }
+  }
+
+  setGroup(event:any){
+    this.actualGroup = event.value;
+    this.listParameter();
+  }
+
+  async listParameter(){
+    let params: IParameter[] = await this.parameterService.get(this.id);
+    params = params.filter( a=> a.group == this.actualGroup); 
+    this.dataSource = new MatTableDataSource(params);
+  }
+
+  getLabelParameter(id:string){
+    switch(id){
+      case "1":
+      return "Objetivo de aprendizaje";
+      case "2":
+        return "Desarrollo de competencia";
+      case "3":
+        return "Objetivos de desempeño";
+      default:
+        return "Objetivos de desempeño";
+    }
+  }
+
 
 }

@@ -1,0 +1,243 @@
+@use "@angular/material" as mat;
+
+// $principal-dark: #03091e;
+$principal-dark: #202e3c;
+$principal-white: #e8e8e8;
+// $principal-white: #69BD4B;
+
+
+:root {
+  --gray-deep: #a1adb7;
+  --gray--light: #d9e0e6;
+  --PrincipalWhite: #69BD4B;
+  --PrincipaDark: #202e3c;
+  // --primary: #d9184b;
+  --primary: #202e3c;
+  --primary_opp: #d9184c8e;
+  --accent: #72148c;
+  --accent_opp: #72148c8c;
+  --warn: #be248d;
+  --err: #fe4949;
+}
+
+$fontConfig: (
+  display-4: mat-typography-level(112px, 112px, 300, "Roboto", -0.0134em),
+  display-3: mat-typography-level(56px, 56px, 400, "Roboto", -0.0089em),
+  display-2: mat-typography-level(45px, 48px, 400, "Roboto", 0em),
+  display-1: mat-typography-level(34px, 40px, 400, "Roboto", 0.0074em),
+  headline: mat-typography-level(24px, 32px, 400, "Roboto", 0em),
+  title: mat-typography-level(20px, 32px, 500, "Roboto", 0.0075em),
+  subheading-2: mat-typography-level(16px, 28px, 400, "Roboto", 0.0094em),
+  subheading-1: mat-typography-level(15px, 24px, 500, "Roboto", 0.0067em),
+  body-2: mat-typography-level(14px, 24px, 500, "Roboto", 0.0179em),
+  body-1: mat-typography-level(14px, 20px, 400, "Roboto", 0.0179em),
+  button: mat-typography-level(14px, 14px, 500, "Roboto", 0.0893em),
+  caption: mat-typography-level(12px, 20px, 400, "Roboto", 0.0333em),
+  input: mat-typography-level(inherit, 1.125, 400, "Roboto", 1.5px),
+);
+
+@include mat.core();
+
+$dark-text: #000000;
+$dark-primary-text: rgba($dark-text, 0.87);
+$dark-accent-text: rgba($dark-primary-text, 0.54);
+$dark-disabled-text: rgba($dark-primary-text, 0.38);
+$dark-dividers: rgba($dark-primary-text, 0.12);
+$dark-focused: rgba($dark-primary-text, 0.12);
+
+$light-text: #ffffff;
+$light-primary-text: $light-text;
+$light-accent-text: rgba($light-primary-text, 0.7);
+$light-disabled-text: rgba($light-primary-text, 0.5);
+$light-dividers: rgba($light-primary-text, 0.12);
+$light-focused: rgba($light-primary-text, 0.12);
+
+// $mat-primary: (
+//   main: #d9184b,
+//   lighter: #f4bac9,
+//   darker: #ca0e33,
+//   200: #d9184b,
+//   // For slide toggle,
+//   contrast:
+//     (
+//       main: $light-primary-text,
+//       lighter: $dark-primary-text,
+//       darker: $light-primary-text,
+//     ),
+// );
+
+$mat-primary: (
+  main: #202e3c,
+  lighter: #bcc0c5,
+  darker: #131d27,
+  200: #202e3c, // For slide toggle,
+  contrast : (
+    main: $light-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
+// $mat-accent: (
+//   main: #72148c,
+//   lighter: #d5b9dd,
+//   darker: #550b6f,
+//   200: #72148c,
+//   // For slide toggle,
+//   contrast:
+//     (
+//       main: $light-primary-text,
+//       lighter: $dark-primary-text,
+//       darker: $light-primary-text,
+//     ),
+// );
+
+$mat-accent: (
+  main: #559a3c,
+  lighter: #cce1c5,
+  darker: #3b7e27,
+  200: #559a3c, // For slide toggle,
+  contrast : (
+    main: $light-primary-text,
+    lighter: $dark-primary-text,
+    darker: $light-primary-text,
+  )
+);
+
+
+$mat-warn: (
+  main: #be248d,
+  lighter: #ecbddd,
+  darker: #a71670,
+  200: #be248d,
+  // For slide toggle,
+  contrast:
+    (
+      main: $light-primary-text,
+      lighter: $dark-primary-text,
+      darker: $light-primary-text,
+    ),
+);
+
+$light-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: mat.define-palette($mat-primary, main, lighter, darker),
+      accent: mat.define-palette($mat-accent, main, lighter, darker),
+      warn: mat.define-palette($mat-warn, main, lighter, darker),
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+      primary: mat.define-palette($mat-primary, main, lighter, darker),
+      accent: mat.define-palette($mat-accent, main, lighter, darker),
+      warn: mat.define-palette($mat-warn, main, lighter, darker),
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+  )
+);
+
+@include mat.all-component-themes($light-theme);
+
+.dark-mode {
+  @include mat.all-component-colors($dark-theme);
+  background-color: $principal-dark !important;
+  .contrast {
+    background-color: $principal-white;
+    color: black;
+    .img-white {
+      display: inline;
+    }
+    .img-black {
+      display: none;
+    }
+  }
+  .match {
+    background-color: $principal-dark;
+    color: white;
+  }
+  .match-color {
+    color: white;
+  }
+  .switcher {
+    border: 2px solid $principal-white;
+  }
+
+  // ---------------------------------------
+  // calenddario
+  // ---------------------------------------
+}
+
+body {
+  @extend .mat-app-background;
+  background-color: $principal-white;
+
+  .contrast {
+    background-color: $principal-dark;
+    color: white;
+    .img-white {
+      display: none;
+    }
+    .img-black {
+      display: inline;
+    }
+  }
+  .match {
+    background-color: $principal-white;
+    color: black;
+  }
+  .match-color {
+    color: black;
+  }
+  .switcher {
+    border: 2px solid $principal-dark;
+  }
+}
+
+.btn-group {
+  .mdc-button.left {
+    border-radius: 10px 0 0 10px;
+  }
+  .mdc-button.middle {
+    border-radius: 0;
+    border-left: 1px solid rgba(230, 230, 230, 0.96);
+    border-right: 1px solid rgba(230, 230, 230, 0.96);
+  }
+  .mdc-button.right {
+    border-radius: 0 10px 10px 0;
+  }
+  .mdc-button:not([disabled]):hover {
+    background-color: rgba(193, 193, 193, 0.96);
+    color: rgba(44, 65, 164, 0.96);
+    transition: 0.3s;
+  }
+}
+
+.mat-button-toggle {
+  background-color: var(--warn);
+  color: white;
+}
+
+.mat-button-toggle:hover {
+  background-color: var(--primary_opp);
+  color: white !important;
+}
+
+.mat-button-toggle-checked {
+  background-color: var(--primary);
+  color: white !important;
+}
+
+.mat-mdc-form-field {
+  width: 100%;
+}
+
+.mat-mdc-raised-button {
+  width: 100%;
+}

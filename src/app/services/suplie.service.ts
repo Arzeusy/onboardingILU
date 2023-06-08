@@ -1,16 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Firestore, collection, addDoc, collectionData, getDoc, doc, where, deleteDoc, fromRef, updateDoc, query, getDocs } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
-import IParameter from '../interfaces/parameter.interface';
+import ISuplie from '../interfaces/suplie.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ParametersService {
+export class SuplieService {
 
   constructor(
     private firestore: Firestore
     ) {}
+
 
   /**
   *  add new template to database 
@@ -18,8 +19,8 @@ export class ParametersService {
   * @returns 
   *  
   */
-  addNew(data:IParameter){
-    const templateRef = collection(this.firestore, 'parameter');
+  addNew(data:ISuplie){
+    const templateRef = collection(this.firestore, 'suplie');
     return addDoc(templateRef, data);
    }
 
@@ -27,12 +28,12 @@ export class ParametersService {
     * @returns all the collections of template
     */
    async get(idTemplate:string){
-    let res: IParameter[] =[];
-    const templateRef = collection(this.firestore, 'parameter');
+    let res: ISuplie[] =[];
+    const templateRef = collection(this.firestore, 'suplie');
     const q = query(templateRef, where("templateId", "==", idTemplate));
     const querySnapshot =  await getDocs(q) ;
     await querySnapshot.forEach((doc) => {
-      res.push({...doc.data(), id:doc.id} as IParameter);
+      res.push({...doc.data(), id:doc.id} as ISuplie);
     })
     return  res ;
    }
@@ -43,12 +44,12 @@ export class ParametersService {
     * @returns return the documment related with id 
     */
     async getById(id:string){
-    const templateRef = doc(this.firestore, `parameter/${id}`);
+    const templateRef = doc(this.firestore, `suplie/${id}`);
     const docSnap = await getDoc(templateRef);
 
     if (docSnap.exists()) {
       console.log("Document data:", docSnap.data());
-      return docSnap.data() as IParameter;
+      return docSnap.data() as ISuplie;
     } else {
       throw new Error("Error al recuperar la información")
     }
@@ -60,8 +61,8 @@ export class ParametersService {
     * @param tlp 
     * @returns delete the document related to id 
     */
-   delete(data: IParameter){
-    const templateRef = doc(this.firestore, `parameter/${data.id}`);
+   delete(data: ISuplie){
+    const templateRef = doc(this.firestore, `suplie/${data.id}`);
     return deleteDoc(templateRef);
 
    }
@@ -69,13 +70,12 @@ export class ParametersService {
      /**
     * 
     * @param tlp 
-    * @returns update the document related to id 
+    * @returns update the document related to id
     */
-     update(data: IParameter){
-      const templateRef = doc(this.firestore, `parameter/${data.id}`);
+     update(data: ISuplie){
+      const templateRef = doc(this.firestore, `suplie/${data.id}`);
       return updateDoc(templateRef, {...data});
      }
-
 
 
 

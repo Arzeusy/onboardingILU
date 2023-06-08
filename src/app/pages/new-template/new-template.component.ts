@@ -12,6 +12,8 @@ import parameterTypeEnum from '../../enums/parameter-type.enum';
 import parameterGroupEnum from '../../enums/parameter-group.enum';
 import { ParametersService } from 'src/app/services/parameters.service';
 import IParameter from 'src/app/interfaces/parameter.interface';
+import ISuplie from 'src/app/interfaces/suplie.interface';
+import { SuplieService } from 'src/app/services/suplie.service';
 
 @Component({
   selector: 'app-new-template',
@@ -23,17 +25,25 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
   step = 0;
   form!: FormGroup;
   formParams: FormGroup= new FormGroup({});
+  formSuplie: FormGroup= new FormGroup({});
   id:string ="";
   displayedColumns: string[] = ['no', 'name', 'group', 'options'];
   actualGroup:number = parameterGroupEnum.objetivosDesempeño;
   dataSource: MatTableDataSource<IParameter> = new MatTableDataSource();
+
+  dataSourceSuplies: MatTableDataSource<ISuplie> = new MatTableDataSource();
+  displayedColumnsSuplie: string[] = ['no', 'name', 'options'];
   
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
+
+  // @ViewChild(MatPaginator) paginator!: MatPaginator;
+  // @ViewChild(MatSort) sort!: MatSort;
   
   constructor(
     private templateService:TemplateService,
     private parameterService:ParametersService,
+    private suplieService:SuplieService,
     private route: ActivatedRoute,
     private spinner: NgxSpinnerService
   ){
@@ -47,17 +57,21 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
       position: new FormControl(null, [Validators.required]),
     });
     
-    this.newformParam();
+    this.newform();
     
   }
 
-  newformParam(){
-
+  newform(){
     this.formParams = new FormGroup({
-      // id: new FormControl(""),
+      id: new FormControl(""),
       name: new FormControl("", [Validators.minLength(10), Validators.maxLength(50), Validators.required]),
       group: new FormControl(this.actualGroup.toString(), [Validators.required]),
       type: new FormControl(parameterTypeEnum.skill, [Validators.required]),
+      templateId: new FormControl(this.id, [Validators.required]),
+    });
+    this.formSuplie = new FormGroup({
+      id: new FormControl(""),
+      name: new FormControl("", [Validators.minLength(3), Validators.maxLength(50), Validators.required]),
       templateId: new FormControl(this.id, [Validators.required]),
     });
   }
@@ -77,6 +91,7 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
       });
 
       this.listParameter();
+      this.listSuplie();
     }
   }
 
@@ -105,8 +120,8 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
   }
 
 
-  hasError(control: string):boolean {
-    if (this.form.get(control)?.errors != null) {
+  hasError(control: string, f:FormGroup):boolean {
+    if (f.get(control)?.errors != null) {
       return true;
     }
     return false;
@@ -133,7 +148,7 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
           this.formParams.value
         );
         this.listParameter();
-        this.newformParam();
+        this.newform();
       this.spinner.hide();
 
     }
@@ -147,7 +162,6 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
   async listParameter(){
     this.spinner.show();
     let params: IParameter[] = await this.parameterService.get(this.id);
-    console.log(params)
     params = params.filter( a=> a.group == this.actualGroup); 
     this.dataSource = new MatTableDataSource(params);
     this.spinner.hide();
@@ -173,6 +187,36 @@ export class NewTemplateComponent implements OnInit,AfterViewInit  {
      await this.parameterService.delete(data);
     this.spinner.hide();
     this.listParameter()
+  }
+
+
+  async onSubmitSuplie(){
+    console.log(this.formSuplie);
+    if (!this.formSuplie.invalid && !!this.id){
+      this.spinner.show();
+        await this.suplieService.addNew(
+          this.formSuplie.value
+        );
+        this.listSuplie();
+        this.newform();
+      this.spinner.hide();
+
+    }
+  }
+
+  async listSuplie(){
+    this.spinner.show();
+    let params: ISuplie[] = await this.suplieService.get(this.id);
+    this.dataSourceSuplies = new MatTableDataSource(params);
+    this.spinner.hide();
+  }
+
+  async deleteSuplie(data:ISuplie){
+    this.spinner.show();
+    console.log(data, "delete")
+     await this.suplieService.delete(data);
+    this.spinner.hide();
+    this.listSuplie()
   }
 
 

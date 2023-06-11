@@ -1,27 +1,21 @@
 # InduccionILU
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.4.
+This project was generated with [Angular CLI] version 16.0.4.
 
-## Development server
+## board
+https://github.com/users/Arzeusy/projects/4
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Diagrama de flujo
 
-## Code scaffolding
+https://excalidraw.com/#json=9Dn7BffiQH65vBvkLPd3_,LM19Ni7jZoMWt9zlEFBNbA
+https://excalidraw.com/#json=EKh_p_UGISZd8pY3PmiE-,kx762cdg84mPez1MUKlNPg
+https://excalidraw.com/#json=UXqRkYMT4BNX2AdYQSkc0,sfN2tWxJW92ustofSy5OsA
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Prototipo
 
-## Build
+https://www.figma.com/file/n2PtiDIoamSXXyOZQGPg8x/SCILU?type=design&node-id=0%3A1&t=kQIDTuD3AxbRVmZ1-1
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## servidor
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+[develop] https://onboarding-ilu-git-develop-arzeusy.vercel.app/home
+[master]  https://onboarding-ilu.vercel.app/
